@@ -11,6 +11,7 @@
 #include "xr_file_system.h"
 #include "xr_log.h"
 #include <time.h>
+#include <windows.h>
 
 using namespace xray_re;
 
@@ -115,6 +116,9 @@ int main(int argc, char* argv[])
 		{"-terrain", cl_parser::OT_BOOL},
 
 		{"-fancy",	cl_parser::OT_STRING},
+
+		{"-soc",	cl_parser::OT_BOOL},
+		{"-cs",	cl_parser::OT_BOOL},
 	};
 
 	cl_parser cl;
@@ -176,14 +180,39 @@ int main(int argc, char* argv[])
 		msg("conflicting source formats");
 		return 1;
 	}
-
+	
+	char FSPath[512];
 	const char* fs_spec = 0;
 	if (format == tools_base::TOOLS_LEVEL ||
 			format == tools_base::TOOLS_DDS ||
 			format == tools_base::TOOLS_FANCY ||
 			format == tools_base::TOOLS_OGG) {
 		if (!cl.get_string("-fs", fs_spec))
-			fs_spec = DEFAULT_FS_SPEC;
+		{
+			char RootPath[512];
+			GetModuleFileName(0,RootPath,sizeof(RootPath));
+			if(char*Path = strrchr(RootPath,'\\'))
+			{
+				Path[0] = 0;
+			}
+			strcpy_s(FSPath,RootPath);
+			strcat_s(FSPath,"\\..\\..\\");
+			fs_spec =  FSPath;
+			if(cl.get_bool("-soc"))
+			{
+				strcat_s(FSPath,DEFAULT_FS_SOC_SPEC);
+			}
+			else if(cl.get_bool("-cs"))
+			{
+				strcat_s(FSPath,DEFAULT_FS_CS_SPEC);
+			}
+			else
+			{
+				strcat_s(FSPath,DEFAULT_FS_SPEC);
+			}
+
+	}
+			
 		if (!xr_file_system::file_exist(fs_spec)) {
 			msg("can't find %s", fs_spec);
 			return 1;

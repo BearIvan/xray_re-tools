@@ -77,6 +77,8 @@ int main(int argc, char* argv[])
 		{"-m2",			cl_parser::OT_STRING},
 		{"-dump_gp",		cl_parser::OT_BOOL},
 		{"-use_orig_dp",	cl_parser::OT_BOOL},
+		{"-soc",	cl_parser::OT_BOOL},
+		{"-cs",	cl_parser::OT_BOOL},
 	};
 	cl_parser cl;
 	if (!cl.parse(argc, argv, xr_dim(options), options) || cl.num_params() != 0) {
@@ -87,10 +89,33 @@ int main(int argc, char* argv[])
 		usage();
 		return 0;
 	}
-
+	char FSPath[512];
 	const char* fs_spec;
 	if (!cl.get_string("-fs", fs_spec))
-		fs_spec = DEFAULT_FS_SPEC;
+	{
+		char RootPath[512];
+		GetModuleFileName(0,RootPath,sizeof(RootPath));
+		if(char*Path = strrchr(RootPath,'\\'))
+		{
+			Path[0] = 0;
+		}
+		strcpy_s(FSPath,RootPath);
+		strcat_s(FSPath,"\\..\\..\\");
+		fs_spec =  FSPath;
+		if(cl.get_bool("-soc"))
+		{
+			strcat_s(FSPath,DEFAULT_FS_SOC_SPEC);
+		}
+		else if(cl.get_bool("-cs"))
+		{
+			strcat_s(FSPath,DEFAULT_FS_CS_SPEC);
+		}
+		else
+		{
+			strcat_s(FSPath,DEFAULT_FS_SPEC);
+		}
+
+	}
 	if (!xr_file_system::file_exist(fs_spec)) {
 		msg("can't find %s", fs_spec);
 		return 1;

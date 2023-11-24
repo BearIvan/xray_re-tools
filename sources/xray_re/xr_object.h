@@ -1,5 +1,6 @@
 #ifndef __GNUC__
 #pragma once
+#include <map>
 #endif
 #ifndef __XR_OBJECT_H__
 #define __XR_OBJECT_H__
@@ -131,7 +132,7 @@ protected:
 
 	const xr_surface_factory*
 				m_surface_factory;
-#ifdef _MSC_VER
+#if 0
 	stdext::hash_map<xr_raw_surface, xr_surface*>
 #else
 	std::map<xr_raw_surface, xr_surface*>

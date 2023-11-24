@@ -1,6 +1,0 @@
-VERSION 0.1
-
-LIBRARY ms3dXRayExport.dll
-EXPORTS
-	CreatePlugIn
-	DestroyPlugIn

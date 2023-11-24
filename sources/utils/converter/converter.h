@@ -7,6 +7,8 @@
 #include "xr_cl_parser.h"
 
 const char BUILD_DATE[] = __DATE__;
-const char DEFAULT_FS_SPEC[] = "fsconverter.ltx";
+const char DEFAULT_FS_SPEC[] = "fs.ltx";
+const char DEFAULT_FS_CS_SPEC[] = "fs_cs.ltx";
+const char DEFAULT_FS_SOC_SPEC[] = "fs_soc.ltx";
 
 #endif

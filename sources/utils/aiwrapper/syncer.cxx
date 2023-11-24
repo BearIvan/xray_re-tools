@@ -67,12 +67,12 @@ void syncer::check_fs_paths() const
 	check_or_create_fs_path(PA_GAME_DATA, status);
 	check_or_create_fs_path(PA_GAME_CONFIG, status);
 	check_or_create_fs_path(PA_GAME_SPAWN, status);
-	check_or_create_fs_path(PA_GAME_LEVELS, status);
+	check_or_create_fs_path(PA_GAME_LEVELS, status);/*
 	check_or_create_fs_path(PA2215_FS_ROOT, status);
 	check_or_create_fs_path(PA2215_GAME_DATA, status, true);
 	check_or_create_fs_path(PA2215_GAME_CONFIG, status, true);
 	check_or_create_fs_path(PA2215_GAME_SPAWN, status, true);
-	check_or_create_fs_path(PA2215_GAME_LEVELS, status, true);
+	check_or_create_fs_path(PA2215_GAME_LEVELS, status, true);*/
 	if (!status)
 		throw sync_error();
 }

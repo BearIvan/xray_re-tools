@@ -160,7 +160,14 @@ bool xr_file_system::parse_fs_spec(xr_reader& r)
 				}
 				if (i >= 0)
 					values[i].assign(p, last);
-				p = last + 1;
+				if(*last=='\n')
+				{
+					p = last;
+				}
+				else
+				{
+					p = last + 1;
+				}
 				++i;
 				if (p == end || *last != '|')
 					break;

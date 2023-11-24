@@ -254,7 +254,7 @@ Image * nv::ImageIO::loadTGA(Stream & s)
 
 		default:
 			nvDebug( "*** ImageIO::loadTGA: Error, unsupported image type.\n" );
-			return false;
+			return nullptr;
 	}
 
 	const uint pixel_size = (tga.pixel_size/8);

@@ -136,9 +136,9 @@ void level_tools::process(const cl_parser& cl)
 		}
 		msg("level name: %s", name);
 		xr_file_system& fs = xr_file_system::instance();
-		if (m_ini->line_exist(m_sect_profile, PA_GAME_DATA))
-			fs.update_path("$temp_game_data$", m_ini->r_string(m_sect_profile, PA_GAME_DATA), "");
-		fs.update_path("$temp_level$", m_ini->r_string(m_sect_profile, PA_GAME_LEVELS), name);
+		//if (m_ini->line_exist(m_sect_profile, PA_GAME_DATA))
+		fs.update_path("$temp_game_data$", PA_GAME_DATA, "");
+		fs.update_path("$temp_level$", PA_GAME_LEVELS, name);
 		
 		//load system ini from build for create spawn entity correctly
 		//load_system_ini("$temp_game_data$");
